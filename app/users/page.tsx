@@ -7,7 +7,11 @@ interface User {
 
 //page.tsx files are conventions which next.js looks for; thus is the only file than can be seen as a page
 const UsersPage = async () => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const res = await fetch(
+    "https://jsonplaceholder.typicode.com/users"
+    // {cache: "no-store"} Doesn't store the data, useful for frequently changing data
+    // {next: {revalidate: 10}} Gets new data every 10 seconds
+  );
   const users: User[] = await res.json();
 
   return (

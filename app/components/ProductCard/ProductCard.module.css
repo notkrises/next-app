@@ -1,0 +1,5 @@
+/*Always use camelCase in these files */
+.card {
+    padding: 1rem;
+    border: 1px solid #ccc
+}

@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import schema from "./schema";
+import { prisma } from "@/prisma/client";
 
 // this is how you create an endpoint for returning a collection of objects
-export function GET(request: NextRequest) {
-  return NextResponse.json([
-    { id: 1, name: "Mosh" },
-    { id: 2, name: "Josh" },
-  ]);
+export async function GET(request: NextRequest) {
+  const users = await prisma.user.findMany();
+  return NextResponse.json(users);
 }
 
 //POST handles post requests which are used for creating objects

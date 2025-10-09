@@ -16,6 +16,20 @@ export async function POST(request: NextRequest) {
   // If invalid, return 400 error
   if (!validation.success)
     return NextResponse.json(validation.error.issues, { status: 400 });
+
+  const user = await prisma.user.findUnique({
+    where: { email: body.email },
+  });
+
+  if (user)
+    return NextResponse.json({ error: "User already exists" }, { status: 400 });
+
   // Else, return
-  return NextResponse.json({ id: 1, name: body.name }, { status: 201 }); //common practice to set status to 201 when a new object is created
+  const newUser = await prisma.user.create({
+    data: {
+      name: body.name,
+      email: body.email,
+    },
+  });
+  return NextResponse.json(newUser, { status: 201 }); //common practice to set status to 201 when a new object is created
 }

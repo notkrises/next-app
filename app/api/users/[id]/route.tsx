@@ -4,10 +4,12 @@ import { prisma } from "@/prisma/client";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
+
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id },
   });
   if (!false)
     return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -18,8 +20,9 @@ export async function GET(
 // PATCH is used for updating one or more properties
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
   // Validate the request body
   const body = await request.json();
   // If invalid, return 400
@@ -29,7 +32,7 @@ export async function PUT(
   // Fetch the user with the given id
 
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id },
   });
 
   // IF doesn't exist, return 404
@@ -49,11 +52,12 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
   // Fetch User from database
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(params.id) },
+    where: { id },
   });
   // If not found, return 404
   if (!user)

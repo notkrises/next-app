@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import {
   Html,
   Body,
@@ -12,9 +12,9 @@ const WelcomeTemplate = ({ name }: { name: string }) => {
   return (
     <Html>
       <Preview>Welcome Aboard!</Preview>
-      <Body>
+      <Body style={body}>
         <Container>
-          <Text>Hello {name}</Text>
+          <Text style={heading}>Hello {name}</Text>
           <Link href="https://studyDSA.com">www.studyDSA.com</Link>
         </Container>
       </Body>
@@ -22,4 +22,10 @@ const WelcomeTemplate = ({ name }: { name: string }) => {
   );
 };
 
+const body: CSSProperties = {
+  background: "#fff",
+};
+const heading: CSSProperties = {
+  fontSize: "32px",
+};
 export default WelcomeTemplate;
